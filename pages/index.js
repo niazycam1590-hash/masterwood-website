@@ -1,4 +1,4 @@
-// pages/index.js - Complete Carpentry Website
+// pages/index.js - Minimalist Carpentry Website
 import Head from 'next/head';
 import { useState } from 'react';
 
@@ -15,646 +15,217 @@ export default function Home() {
     service: '',
     budget: '',
     timeline: '',
-    urgency: 'normal',
     description: ''
   });
 
-  const [bookingData, setBookingData] = useState({
-    name: '',
-    phone: '',
-    date: '',
-    time: '',
-    service: '',
-    address: '',
-    notes: ''
-  });
-
-  const [calculator, setCalculator] = useState({
-    service: '',
-    area: '',
-    quality: 'standard',
-    estimate: null
-  });
-
   const services = [
-    { id: 'cabinets', title: "Custom Cabinet Making", price: 2500, unit: "sq ft" },
-    { id: 'kitchen', title: "Kitchen Renovation", price: 150000, unit: "project" },
-    { id: 'bathroom', title: "Bathroom Renovation", price: 80000, unit: "project" },
-    { id: 'paneling', title: "Wall Paneling & Molding", price: 350, unit: "sq ft" },
-    { id: 'flooring', title: "Wooden Flooring", price: 200, unit: "sq ft" },
-    { id: 'furniture', title: "Custom Furniture", price: 0, unit: "custom" }
-  ];
-
-  const timeSlots = [
-    "09:00 AM", "10:00 AM", "11:00 AM", 
-    "12:00 PM", "02:00 PM", "03:00 PM", 
-    "04:00 PM", "05:00 PM", "06:00 PM"
+    { id: 'cabinets', title: "Custom Cabinets", price: "2,500", unit: "per sq ft", desc: "Modular kitchen & storage cabinets" },
+    { id: 'wardrobe', title: "Wardrobe & Installation", price: "8,000", unit: "per ft", desc: "Built-in & walk-in wardrobes" },
+    { id: 'door', title: "Door Installation", price: "15,000", unit: "per door", desc: "Wooden doors & frames" },
+    { id: 'polishing', title: "Furniture Polishing", price: "150", unit: "per sq ft", desc: "Restore & protect wood surfaces" },
+    { id: 'molding', title: "Custom Wall Molding", price: "350", unit: "per ft", desc: "Crown & decorative molding" },
+    { id: 'kitchen', title: "Kitchen Renovation", price: "150,000", unit: "starting", desc: "Complete kitchen makeover" },
+    { id: 'racks', title: "Custom Storage Racks", price: "5,000", unit: "per unit", desc: "Shelving & organization systems" },
+    { id: 'bathroom', title: "Bathroom Renovation", price: "80,000", unit: "starting", desc: "Vanities & bathroom storage" },
+    { id: 'flooring', title: "Wooden Flooring", price: "200", unit: "per sq ft", desc: "Hardwood & engineered flooring" },
+    { id: 'media', title: "Media Wall Design", price: "25,000", unit: "starting", desc: "TV units & feature walls" },
+    { id: 'paneling', title: "Wall Panelling", price: "400", unit: "per sq ft", desc: "3D & decorative wall panels" },
+    { id: 'lock', title: "Door Lock Installation", price: "2,000", unit: "per lock", desc: "Smart & traditional locks" },
+    { id: 'other', title: "Other Services", price: "Custom", unit: "quote", desc: "Tell us your requirements" }
   ];
 
   const portfolio = [
-    {
-      id: 1,
-      title: "Modern DHA Kitchen",
-      category: "Kitchen Renovation",
-      location: "DHA Phase 5, Lahore",
-      description: "Complete modular kitchen with Italian laminate finish, soft-close drawers, and LED lighting.",
-      details: "45 days | Rs. 450,000 | 120 sq ft"
-    },
-    {
-      id: 2,
-      title: "Bahria Town Master Bathroom",
-      category: "Bathroom Renovation",
-      location: "Bahria Town, Lahore",
-      description: "Waterproof vanity cabinets, mirror storage, and marble-patterned wall panels.",
-      details: "21 days | Rs. 180,000 | 45 sq ft"
-    },
-    {
-      id: 3,
-      title: "Gulberg Office Wall Paneling",
-      category: "Wall Paneling",
-      location: "Gulberg III, Lahore",
-      description: "Executive office with 3D acoustic panels and hidden LED cove lighting.",
-      details: "14 days | Rs. 220,000 | 200 sq ft"
-    },
-    {
-      id: 4,
-      title: "Model Town Wardrobe",
-      category: "Custom Cabinets",
-      location: "Model Town, Lahore",
-      description: "Floor-to-ceiling wardrobes with sliding mirrors and internal organizers.",
-      details: "18 days | Rs. 320,000 | 80 sq ft"
-    },
-    {
-      id: 5,
-      title: "Johar Town Flooring",
-      category: "Wooden Flooring",
-      location: "Johar Town, Lahore",
-      description: "German-engineered oak flooring with moisture barrier for ground floor.",
-      details: "7 days | Rs. 280,000 | 350 sq ft"
-    },
-    {
-      id: 6,
-      title: "Cantt Bedroom Set",
-      category: "Custom Furniture",
-      location: "Cantonment, Lahore",
-      description: "King bed with hydraulic storage, matching side tables, and dresser.",
-      details: "25 days | Rs. 195,000 | Complete set"
-    }
+    { id: 1, title: "Modern Kitchen", service: "Kitchen Renovation", location: "DHA Phase 5" },
+    { id: 2, title: "Walk-in Wardrobe", service: "Wardrobe Installation", location: "Bahria Town" },
+    { id: 3, title: "Media Wall", service: "Media Wall Design", location: "Gulberg" },
+    { id: 4, title: "Hardwood Floor", service: "Wooden Flooring", location: "Model Town" },
+    { id: 5, title: "Custom Cabinets", service: "Custom Cabinets", location: "Johar Town" },
+    { id: 6, title: "Bathroom Vanity", service: "Bathroom Renovation", location: "Cantt" }
   ];
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "Ahmed Hassan",
-      location: "DHA Phase 6",
-      rating: 5,
-      text: "Exceptional work on our kitchen! The team was professional, punctual, and the attention to detail was remarkable. Completed exactly on time and within budget.",
-      project: "Kitchen Renovation",
-      date: "January 2025"
-    },
-    {
-      id: 2,
-      name: "Sara Malik",
-      location: "Bahria Town",
-      rating: 5,
-      text: "I was skeptical about renovating my bathroom, but MasterWood made it stress-free. The waterproof cabinets are beautiful and functional. Highly recommended!",
-      project: "Bathroom Renovation",
-      date: "December 2024"
-    },
-    {
-      id: 3,
-      name: "Usman Sheikh",
-      location: "Gulberg",
-      rating: 5,
-      text: "The wall paneling in my office has transformed the space completely. Clients always compliment the modern look. Great craftsmanship and service.",
-      project: "Wall Paneling",
-      date: "November 2024"
-    },
-    {
-      id: 4,
-      name: "Fatima Zahra",
-      location: "Model Town",
-      rating: 5,
-      text: "Built our entire bedroom set exactly as we envisioned. The quality of wood and finish is outstanding. Will definitely hire again for our guest room.",
-      project: "Custom Furniture",
-      date: "October 2024"
-    },
-    {
-      id: 5,
-      name: "Ali Raza",
-      location: "Johar Town",
-      rating: 4,
-      text: "Good work on our wooden flooring. Team was knowledgeable about moisture protection which was crucial for our ground floor. Minor delays but quality made up for it.",
-      project: "Wooden Flooring",
-      date: "September 2024"
-    }
-  ];
-
-  const calculateEstimate = () => {
-    const service = services.find(s => s.id === calculator.service);
-    if (!service || !calculator.area) return;
-    
-    let basePrice = service.price;
-    if (service.unit === 'sq ft') {
-      basePrice = basePrice * parseInt(calculator.area);
-    }
-    
-    const multipliers = { standard: 1, premium: 1.4, luxury: 2 };
-    const estimate = basePrice * multipliers[calculator.quality];
-    
-    setCalculator({...calculator, estimate});
-  };
-
-  const submitLead = async (e) => {
+  const submitLead = (e) => {
     e.preventDefault();
     setSubmitting(true);
-    
-    const message = `*New Lead - MasterWood*%0A%0A` +
-      `*Name:* ${leadData.name}%0A` +
-      `*Phone:* ${leadData.phone}%0A` +
-      `*Email:* ${leadData.email || 'N/A'}%0A` +
-      `*Address:* ${leadData.address}%0A` +
-      `*Service:* ${leadData.service}%0A` +
-      `*Budget:* ${leadData.budget}%0A` +
-      `*Timeline:* ${leadData.timeline}%0A` +
-      `*Urgency:* ${leadData.urgency}%0A` +
-      `*Details:* ${leadData.description}`;
-    
-    window.open(`https://wa.me/923001234567?text=${message}`, '_blank');
-    alert('Quote request sent! We will contact you within 2 hours.');
-    setActiveForm(null);
-    setFormStep(1);
-    setSubmitting(false);
-  };
-
-  const submitBooking = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    
-    const message = `*Site Visit Booking - MasterWood*%0A%0A` +
-      `*Name:* ${bookingData.name}%0A` +
-      `*Phone:* ${bookingData.phone}%0A` +
-      `*Date:* ${bookingData.date}%0A` +
-      `*Time:* ${bookingData.time}%0A` +
-      `*Service:* ${bookingData.service}%0A` +
-      `*Address:* ${bookingData.address}%0A` +
-      `*Notes:* ${bookingData.notes || 'N/A'}`;
-    
+    const message = `*New Lead*%0A%0AName: ${leadData.name}%0APhone: ${leadData.phone}%0AService: ${leadData.service}%0AAddress: ${leadData.address}%0ADetails: ${leadData.description}`;
     window.open(`https://wa.me/923054146737?text=${message}`, '_blank');
-    alert('Booking confirmed! We will contact you shortly.');
-    setActiveForm(null);
     setSubmitting(false);
+    setActiveForm(null);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white text-gray-900 font-sans">
       <Head>
-        <title>Expert Carpentry Lahore | Kitchen & Bathroom Renovation</title>
-        <meta name="description" content="Professional carpentry services in DHA, Bahria Town, Lahore. Custom kitchens, bathroom renovation, wall paneling. Free quotes." />
+        <title>MasterWood | Custom Carpentry Lahore</title>
+        <meta name="description" content="Professional carpentry services in Lahore. Custom cabinets, wardrobes, kitchen renovation, wooden flooring." />
       </Head>
 
-      {/* Navigation */}
-      <nav className="bg-white shadow-md sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="text-2xl font-bold text-amber-800">🪚 MasterWood Lahore</div>
-            <div className="hidden md:flex space-x-6">
-              <a href="#services" className="text-gray-700 hover:text-amber-800">Services</a>
-              <a href="#portfolio" className="text-gray-700 hover:text-amber-800">Portfolio</a>
-              <a href="#testimonials" className="text-gray-700 hover:text-amber-800">Reviews</a>
-              <a href="#contact" className="text-gray-700 hover:text-amber-800">Contact</a>
-            </div>
-            <button 
-              onClick={() => setActiveForm('lead')}
-              className="bg-amber-800 text-white px-4 py-2 rounded-lg hover:bg-amber-900"
-            >
-              Get Quote
-            </button>
-          </div>
+      {/* Header */}
+      <header className="border-b border-gray-100">
+        <div className="max-w-5xl mx-auto px-6 py-6 flex justify-between items-center">
+          <h1 className="text-2xl font-light tracking-tight">MasterWood</h1>
+          <button onClick={() => setActiveForm('lead')} className="bg-black text-white px-6 py-2 text-sm hover:bg-gray-800 transition">
+            Get Quote
+          </button>
         </div>
-      </nav>
+      </header>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-amber-900 to-amber-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Lahore's Trusted Carpentry Experts
-              </h1>
-              <p className="text-xl mb-8 text-amber-100">
-                Custom kitchens, wardrobes & renovations. 
-                500+ projects completed. Free site visits.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button 
-                  onClick={() => setActiveForm('booking')}
-                  className="bg-white text-amber-900 px-8 py-4 rounded-lg font-bold text-center hover:bg-gray-100"
-                >
-                  📅 Book Free Site Visit
-                </button>
-                <button 
-                  onClick={() => setActiveForm('lead')}
-                  className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-center hover:bg-white hover:text-amber-900"
-                >
-                  💬 Get Quick Quote
-                </button>
-              </div>
-              <div className="mt-8 flex items-center gap-6 text-sm">
-                <span className="flex items-center gap-2">⭐ 4.9/5 (127 reviews)</span>
-                <span className="flex items-center gap-2">🏆 10+ Years</span>
-                <span className="flex items-center gap-2">🛡️ 10-Year Warranty</span>
-              </div>
-            </div>
-            
-            {/* Quick Calculator */}
-            <div className="bg-white rounded-2xl p-6 text-gray-800 shadow-2xl">
-              <h3 className="text-xl font-bold mb-4 text-amber-900">⚡ Instant Estimate</h3>
-              <select 
-                className="w-full mb-3 p-3 border rounded-lg"
-                value={calculator.service}
-                onChange={(e) => setCalculator({...calculator, service: e.target.value, estimate: null})}
-              >
-                <option value="">Select Service</option>
-                {services.map(s => (
-                  <option key={s.id} value={s.id}>{s.title}</option>
-                ))}
-              </select>
-              
-              <input
-                type="number"
-                placeholder="Area (sq ft) or Units"
-                className="w-full mb-3 p-3 border rounded-lg"
-                value={calculator.area}
-                onChange={(e) => setCalculator({...calculator, area: e.target.value, estimate: null})}
-              />
-              
-              <select 
-                className="w-full mb-4 p-3 border rounded-lg"
-                value={calculator.quality}
-                onChange={(e) => setCalculator({...calculator, quality: e.target.value, estimate: null})}
-              >
-                <option value="standard">Standard Quality</option>
-                <option value="premium">Premium Quality (+40%)</option>
-                <option value="luxury">Luxury/Imported (+100%)</option>
-              </select>
-              
-              <button 
-                onClick={calculateEstimate}
-                className="w-full bg-amber-800 text-white py-3 rounded-lg font-bold hover:bg-amber-900"
-              >
-                Calculate Estimate
-              </button>
-              
-              {calculator.estimate && (
-                <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
-                  <p className="text-sm text-gray-600">Estimated Range:</p>
-                  <p className="text-2xl font-bold text-amber-900">
-                    Rs. {(calculator.estimate * 0.9).toLocaleString()} - {calculator.estimate.toLocaleString()}
-                  </p>
+      {/* Hero */}
+      <section className="max-w-5xl mx-auto px-6 py-20">
+        <p className="text-sm text-gray-500 mb-4 uppercase tracking-widest">Lahore's Trusted Carpenters</p>
+        <h2 className="text-5xl md:text-6xl font-light leading-tight mb-6">
+          Custom woodwork<br />for your home
+        </h2>
+        <p className="text-gray-600 text-lg mb-8 max-w-xl">
+          Precision craftsmanship for kitchens, wardrobes, doors, and interiors. 
+          Serving DHA, Bahria Town, and all Lahore.
+        </p>
+        <div className="flex gap-4">
+          <button onClick={() => setActiveForm('booking')} className="bg-black text-white px-8 py-3 hover:bg-gray-800 transition">
+            Book Visit
+          </button>
+          <a href="#services" className="border border-gray-300 px-8 py-3 hover:border-black transition">
+            View Services
+          </a>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section id="services" className="bg-gray-50 py-20">
+        <div className="max-w-5xl mx-auto px-6">
+          <h3 className="text-2xl font-light mb-12">Our Services</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200">
+            {services.map((service) => (
+              <div key={service.id} className="bg-white p-8 hover:bg-gray-50 transition group">
+                <h4 className="text-lg font-medium mb-2">{service.title}</h4>
+                <p className="text-gray-500 text-sm mb-4">{service.desc}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Rs. {service.price} <span className="text-gray-400">/{service.unit}</span></span>
                   <button 
-                    onClick={() => setActiveForm('lead')}
-                    className="w-full mt-3 bg-green-600 text-white py-2 rounded text-sm hover:bg-green-700"
+                    onClick={() => {setLeadData({...leadData, service: service.title}); setActiveForm('lead');}}
+                    className="text-sm opacity-0 group-hover:opacity-100 transition underline"
                   >
-                    Get Exact Quote
+                    Quote
                   </button>
                 </div>
-              )}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-16 max-w-7xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Our Services</h2>
-          <p className="text-gray-600">Complete carpentry solutions for your home</p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-6">
-          {services.map((service) => (
-            <div key={service.id} className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition border-l-4 border-amber-800">
-              <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-              <p className="text-gray-600 mb-4">
-                Starting from Rs. {service.price.toLocaleString()}{service.unit !== 'project' ? '/' + service.unit : ''}
-              </p>
-              <button 
-                onClick={() => {
-                  setLeadData({...leadData, service: service.title});
-                  setActiveForm('lead');
-                }}
-                className="text-amber-800 font-semibold hover:underline"
-              >
-                Get Quote →
-              </button>
+      {/* Portfolio */}
+      <section className="max-w-5xl mx-auto px-6 py-20">
+        <h3 className="text-2xl font-light mb-12">Recent Work</h3>
+        <div className="grid md:grid-cols-3 gap-8">
+          {portfolio.map((item) => (
+            <div key={item.id} className="group">
+              <div className="bg-gray-100 aspect-[4/3] mb-4 flex items-center justify-center text-gray-400">
+                <span className="text-4xl">📷</span>
+              </div>
+              <p className="text-sm text-gray-500 mb-1">{item.service}</p>
+              <h4 className="font-medium">{item.title}</h4>
+              <p className="text-sm text-gray-400">{item.location}</p>
             </div>
           ))}
         </div>
+        <p className="text-center text-gray-400 text-sm mt-12">Add your photos to replace placeholders</p>
       </section>
 
-      {/* Portfolio Section */}
-      <section id="portfolio" className="bg-gray-100 py-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Recent Work</h2>
-            <p className="text-gray-600">Projects completed across Lahore</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolio.map((project) => (
-              <div key={project.id} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition">
-                <div className="h-48 bg-amber-200 flex items-center justify-center">
-                  <span className="text-6xl">🪚</span>
-                </div>
-                <div className="p-6">
-                  <div className="text-sm text-amber-800 font-bold mb-2">{project.category}</div>
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3">📍 {project.location}</p>
-                  <p className="text-gray-700 mb-3">{project.description}</p>
-                  <div className="text-sm text-amber-800 font-semibold">{project.details}</div>
-                </div>
+      {/* Process */}
+      <section className="bg-gray-50 py-20">
+        <div className="max-w-5xl mx-auto px-6">
+          <h3 className="text-2xl font-light mb-12">How We Work</h3>
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { step: "01", title: "Consult", desc: "Free site visit & measurements" },
+              { step: "02", title: "Design", desc: "Custom plans & 3D renders" },
+              { step: "03", title: "Build", desc: "Expert craftsmanship" },
+              { step: "04", title: "Install", desc: "Perfect finish & cleanup" }
+            ].map((item) => (
+              <div key={item.step}>
+                <span className="text-4xl font-light text-gray-200">{item.step}</span>
+                <h4 className="text-lg font-medium mt-4 mb-2">{item.title}</h4>
+                <p className="text-gray-500 text-sm">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-amber-900 text-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
-            <p className="text-amber-200">Trusted by 500+ homeowners across Lahore</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((review) => (
-              <div key={review.id} className="bg-amber-800 rounded-xl p-6 hover:bg-amber-700 transition">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className={i < review.rating ? "text-yellow-400" : "text-gray-400"}>★</span>
-                  ))}
-                </div>
-                <p className="text-amber-100 mb-4 italic">"{review.text}"</p>
-                <div className="border-t border-amber-600 pt-4">
-                  <p className="font-bold">{review.name}</p>
-                  <p className="text-sm text-amber-200">{review.location} • {review.project}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-yellow-400">500+</div>
-              <div className="text-amber-200">Projects Completed</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-yellow-400">4.9/5</div>
-              <div className="text-amber-200">Average Rating</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-yellow-400">10+</div>
-              <div className="text-amber-200">Years Experience</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-yellow-400">50+</div>
-              <div className="text-amber-200">5-Star Reviews</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="bg-gray-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12">
+      {/* Contact */}
+      <section id="contact" className="max-w-5xl mx-auto px-6 py-20">
+        <div className="grid md:grid-cols-2 gap-16">
           <div>
-            <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Home?</h2>
-            <p className="text-gray-400 mb-8">Get a free consultation and detailed quote. No obligation.</p>
+            <h3 className="text-2xl font-light mb-6">Get in Touch</h3>
+            <p className="text-gray-600 mb-8">Ready to start your project? Get a free quote within 2 hours.</p>
             
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center gap-4">
-                <span className="text-2xl">📞</span>
-                <div>
-                  <p className="font-bold">0300-1234567</p>
-                  <p className="text-sm text-gray-400">Mon-Sat: 9AM - 8PM</p>
-                </div>
+            <div className="space-y-4 text-sm">
+              <div className="flex justify-between border-b border-gray-100 pb-2">
+                <span className="text-gray-500">Phone</span>
+                <span>0300-1234567</span>
               </div>
-              <div className="flex items-center gap-4">
-                <span className="text-2xl">📍</span>
-                <div>
-                  <p className="font-bold">Workshop: DHA Phase 6, Lahore</p>
-                  <p className="text-sm text-gray-400">Site visits across all Lahore</p>
-                </div>
+              <div className="flex justify-between border-b border-gray-100 pb-2">
+                <span className="text-gray-500">Email</span>
+                <span>info@masterwood.pk</span>
               </div>
-              <div className="flex items-center gap-4">
-                <span className="text-2xl">✉️</span>
-                <div>
-                  <p className="font-bold">info@masterwood.pk</p>
-                  <p className="text-sm text-gray-400">Response within 2 hours</p>
-                </div>
+              <div className="flex justify-between border-b border-gray-100 pb-2">
+                <span className="text-gray-500">Location</span>
+                <span>DHA Phase 6, Lahore</span>
               </div>
-            </div>
-
-            <div className="flex gap-4">
-              <button 
-                onClick={() => setActiveForm('booking')}
-                className="bg-amber-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-amber-700"
-              >
-                Book Visit
-              </button>
-              <button 
-                onClick={() => setActiveForm('lead')}
-                className="border-2 border-amber-600 text-amber-600 px-6 py-3 rounded-lg font-bold hover:bg-amber-600 hover:text-white"
-              >
-                Get Quote
-              </button>
+              <div className="flex justify-between border-b border-gray-100 pb-2">
+                <span className="text-gray-500">Hours</span>
+                <span>Mon-Sat: 9AM - 8PM</span>
+              </div>
             </div>
           </div>
 
-          {/* Quick Contact Form */}
-          <div className="bg-gray-800 p-6 rounded-xl">
-            <h3 className="text-xl font-bold mb-4">Quick Message</h3>
-            <form onSubmit={submitLead} className="space-y-4">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                onChange={(e) => setLeadData({...leadData, name: e.target.value})}
-                required
-              />
-              <input
-                type="tel"
-                placeholder="Phone"
-                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                onChange={(e) => setLeadData({...leadData, phone: e.target.value})}
-                required
-              />
-              <select 
-                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                onChange={(e) => setLeadData({...leadData, service: e.target.value})}
-              >
-                <option value="">Select Service</option>
-                {services.map(s => (
-                  <option key={s.id} value={s.title}>{s.title}</option>
-                ))}
-              </select>
-              <textarea
-                placeholder="Your message..."
-                rows={3}
-                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                onChange={(e) => setLeadData({...leadData, description: e.target.value})}
-              />
-              <button 
-                type="submit"
-                className="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700"
-              >
-                Send via WhatsApp →
-              </button>
-            </form>
-          </div>
+          <form onSubmit={submitLead} className="space-y-4">
+            <input type="text" placeholder="Name" className="w-full border-b border-gray-200 py-3 focus:outline-none focus:border-black" onChange={(e) => setLeadData({...leadData, name: e.target.value})} required />
+            <input type="tel" placeholder="Phone" className="w-full border-b border-gray-200 py-3 focus:outline-none focus:border-black" onChange={(e) => setLeadData({...leadData, phone: e.target.value})} required />
+            <select className="w-full border-b border-gray-200 py-3 focus:outline-none focus:border-black bg-white" onChange={(e) => setLeadData({...leadData, service: e.target.value})}>
+              <option value="">Select Service</option>
+              {services.map(s => <option key={s.id} value={s.title}>{s.title}</option>)}
+            </select>
+            <textarea placeholder="Project details" rows={3} className="w-full border-b border-gray-200 py-3 focus:outline-none focus:border-black resize-none" onChange={(e) => setLeadData({...leadData, description: e.target.value})} />
+            <button type="submit" disabled={submitting} className="bg-black text-white px-8 py-3 w-full hover:bg-gray-800 transition">
+              {submitting ? 'Sending...' : 'Send Message'}
+            </button>
+          </form>
         </div>
       </section>
-
-      {/* LEAD FORM MODAL */}
-      {activeForm === 'lead' && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-amber-900">Get Your Free Quote</h2>
-              <button onClick={() => setActiveForm(null)} className="text-2xl">&times;</button>
-            </div>
-            
-            <form onSubmit={submitLead} className="p-6 space-y-4">
-              <div className="flex mb-6">
-                {[1, 2, 3].map(step => (
-                  <div key={step} className={`flex-1 h-2 mx-1 rounded ${formStep >= step ? 'bg-amber-800' : 'bg-gray-200'}`} />
-                ))}
-              </div>
-
-              {formStep === 1 && (
-                <>
-                  <h3 className="font-bold text-lg mb-4">Step 1: Contact Information</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="Full Name *" className="w-full p-3 border rounded-lg" value={leadData.name} onChange={(e) => setLeadData({...leadData, name: e.target.value})} required />
-                    <input type="tel" placeholder="Phone *" className="w-full p-3 border rounded-lg" value={leadData.phone} onChange={(e) => setLeadData({...leadData, phone: e.target.value})} required />
-                  </div>
-                  <input type="email" placeholder="Email (optional)" className="w-full p-3 border rounded-lg" value={leadData.email} onChange={(e) => setLeadData({...leadData, email: e.target.value})} />
-                  <input type="text" placeholder="Address in Lahore *" className="w-full p-3 border rounded-lg" value={leadData.address} onChange={(e) => setLeadData({...leadData, address: e.target.value})} required />
-                  <button type="button" onClick={() => setFormStep(2)} className="w-full bg-amber-800 text-white py-3 rounded-lg font-bold">Next →</button>
-                </>
-              )}
-
-              {formStep === 2 && (
-                <>
-                  <h3 className="font-bold text-lg mb-4">Step 2: Project Details</h3>
-                  <select className="w-full p-3 border rounded-lg mb-4" value={leadData.service} onChange={(e) => setLeadData({...leadData, service: e.target.value})} required>
-                    <option value="">Select Service *</option>
-                    {services.map(s => <option key={s.id} value={s.title}>{s.title}</option>)}
-                  </select>
-                  <select className="w-full p-3 border rounded-lg mb-4" value={leadData.budget} onChange={(e) => setLeadData({...leadData, budget: e.target.value})}>
-                    <option value="">Budget Range</option>
-                    <option value="50k-100k">Rs. 50k - 100k</option>
-                    <option value="100k-250k">Rs. 100k - 250k</option>
-                    <option value="250k-500k">Rs. 250k - 500k</option>
-                    <option value="500k+">Rs. 500k+</option>
-                  </select>
-                  <div className="flex gap-4">
-                    <button type="button" onClick={() => setFormStep(1)} className="flex-1 bg-gray-200 py-3 rounded-lg">← Back</button>
-                    <button type="button" onClick={() => setFormStep(3)} className="flex-1 bg-amber-800 text-white py-3 rounded-lg font-bold">Next →</button>
-                  </div>
-                </>
-              )}
-
-              {formStep === 3 && (
-                <>
-                  <h3 className="font-bold text-lg mb-4">Step 3: Tell Us More</h3>
-                  <textarea placeholder="Project details..." rows={4} className="w-full p-3 border rounded-lg mb-4" value={leadData.description} onChange={(e) => setLeadData({...leadData, description: e.target.value})} />
-                  <div className="bg-amber-50 p-4 rounded-lg mb-4">
-                    <p className="text-sm">✅ We will contact you within <strong>2 hours</strong></p>
-                  </div>
-                  <div className="flex gap-4">
-                    <button type="button" onClick={() => setFormStep(2)} className="flex-1 bg-gray-200 py-3 rounded-lg">← Back</button>
-                    <button type="submit" disabled={submitting} className="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold">
-                      {submitting ? 'Sending...' : '📱 Send via WhatsApp'}
-                    </button>
-                  </div>
-                </>
-              )}
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* BOOKING MODAL */}
-      {activeForm === 'booking' && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full">
-            <div className="p-6 border-b flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-amber-900">Book Site Visit</h2>
-              <button onClick={() => setActiveForm(null)} className="text-2xl">&times;</button>
-            </div>
-            <form onSubmit={submitBooking} className="p-6 space-y-4">
-              <input type="text" placeholder="Name *" className="w-full p-3 border rounded-lg" value={bookingData.name} onChange={(e) => setBookingData({...bookingData, name: e.target.value})} required />
-              <input type="tel" placeholder="Phone *" className="w-full p-3 border rounded-lg" value={bookingData.phone} onChange={(e) => setBookingData({...bookingData, phone: e.target.value})} required />
-              <input type="text" placeholder="Address *" className="w-full p-3 border rounded-lg" value={bookingData.address} onChange={(e) => setBookingData({...bookingData, address: e.target.value})} required />
-              <div className="grid grid-cols-2 gap-4">
-                <input type="date" className="w-full p-3 border rounded-lg" value={bookingData.date} onChange={(e) => setBookingData({...bookingData, date: e.target.value})} min={new Date().toISOString().split('T')[0]} required />
-                <select className="w-full p-3 border rounded-lg" value={bookingData.time} onChange={(e) => setBookingData({...bookingData, time: e.target.value})} required>
-                  <option value="">Time</option>
-                  {timeSlots.map(t => <option key={t} value={t}>{t}</option>)}
-                </select>
-              </div>
-              <button type="submit" disabled={submitting} className="w-full bg-green-600 text-white py-3 rounded-lg font-bold">
-                {submitting ? 'Confirming...' : '✅ Confirm Booking'}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Floating CTA */}
-      <div className="fixed bottom-6 right-6 z-30 flex flex-col gap-3">
-        <button onClick={() => setActiveForm('booking')} className="bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 flex items-center gap-2">
-          <span>📅</span>
-          <span className="hidden md:inline font-bold">Book Visit</span>
-        </button>
-        <a href="https://wa.me/923001234567" target="_blank" className="bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 text-center">💬</a>
-      </div>
 
       {/* Footer */}
-      <footer className="bg-gray-950 text-gray-400 py-12">
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-xl font-bold text-white mb-4">MasterWood</h3>
-            <p>Premium carpentry services in Lahore since 2015</p>
-          </div>
-          <div>
-            <h4 className="font-bold text-white mb-4">Services</h4>
-            <ul className="space-y-2">
-              <li>Kitchen Renovation</li>
-              <li>Custom Cabinets</li>
-              <li>Bathroom Remodeling</li>
-              <li>Wall Paneling</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-white mb-4">Areas</h4>
-            <ul className="space-y-2">
-              <li>DHA Lahore</li>
-              <li>Bahria Town</li>
-              <li>Gulberg</li>
-              <li>Model Town</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-white mb-4">Contact</h4>
-            <p>📞 0300-1234567</p>
-            <p>📍 DHA Phase 6, Lahore</p>
-          </div>
+      <footer className="border-t border-gray-100 py-8">
+        <div className="max-w-5xl mx-auto px-6 flex justify-between items-center text-sm text-gray-500">
+          <span>© 2025 MasterWood</span>
+          <span>Lahore, Pakistan</span>
         </div>
       </footer>
+
+      {/* Modal */}
+      {activeForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white max-w-md w-full p-8">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-light">Get Quote</h3>
+              <button onClick={() => setActiveForm(null)} className="text-2xl">&times;</button>
+            </div>
+            <form onSubmit={submitLead} className="space-y-4">
+              <input type="text" placeholder="Name" className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black" onChange={(e) => setLeadData({...leadData, name: e.target.value})} required />
+              <input type="tel" placeholder="Phone" className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black" onChange={(e) => setLeadData({...leadData, phone: e.target.value})} required />
+              <input type="text" placeholder="Address" className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black" onChange={(e) => setLeadData({...leadData, address: e.target.value})} required />
+              <select className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black bg-white" onChange={(e) => setLeadData({...leadData, service: e.target.value})}>
+                <option value="">Select Service</option>
+                {services.map(s => <option key={s.id} value={s.title}>{s.title}</option>)}
+              </select>
+              <textarea placeholder="Tell us about your project" rows={3} className="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black resize-none" onChange={(e) => setLeadData({...leadData, description: e.target.value})} />
+              <button type="submit" disabled={submitting} className="bg-black text-white px-8 py-3 w-full hover:bg-gray-800 transition">
+                {submitting ? 'Sending...' : 'Send via WhatsApp'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
